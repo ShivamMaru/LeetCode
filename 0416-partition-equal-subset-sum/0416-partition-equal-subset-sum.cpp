@@ -1,35 +1,25 @@
 class Solution {
 public:
-    bool solve(vector<int>arr,int n, int sum, vector<vector<int>>& dp){
-        if(sum == 0)
-            return true;
-        if(n == 0)
-            return false;
-        if(dp[n][sum] != -1)
-            return dp[n][sum];
-            
-        if(sum >= arr[n-1])
-            return dp[n][sum] = solve(arr, n-1 , sum - arr[n-1]  , dp) || 
-            solve(arr, n-1 ,sum, dp);
-        else
-            return solve(arr, n-1,sum  , dp);
-            
-        
+    bool subsetSum(vector<int>& nums , int sum , int n , vector<vector<bool>>& dp){
+        for(int i = 0 ; i < n+1 ; i++) dp[i][0] = true;
+
+        for(int i = 1 ; i <= n ; i++){
+            for(int j = 1 ; j <= sum ; j++){
+                if(j >= nums[i-1])
+                    dp[i][j] = dp[i-1][j-nums[i-1]] || dp[i-1][j];
+                else
+                    dp[i][j] = dp[i-1][j];
+            }
+        }
+        return dp[n][sum];
     }
     bool canPartition(vector<int>& nums) {
         int n = nums.size();
-        int sum = 0;
-        
-        for(int i = 0; i<n; i++){
-            sum += nums[i];
-       }
-    
-        if(sum % 2 != 0)
-            return false;
-        else{
-            sum = sum/2;
-            vector<vector<int>> dp(n+1, vector<int> (sum+1,-1));
-            return solve(nums,n,sum,dp);
-            }
+        int sum = 0 ;
+        for(int i = 0 ; i < n ; i++) sum += nums[i];
+        if(sum%2!=0) return false;
+        vector<vector<bool>> dp(n+1 , vector<bool>((sum+1) , false));
+        return subsetSum(nums,sum/2,n,dp);
     }
+    
 };
