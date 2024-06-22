@@ -5,15 +5,12 @@ public:
             return 0;
         }
         if(s[i-1] == t[j-1]){
-            return 1 +isSubsequence(s,t,i-1,j-1);
+            return 1 + isSubsequence(s,t,i-1,j-1);
         }
         else{
             return isSubsequence(s,t,i,j-1);
         }
     }
-
-
-
 
     bool isSubsequence(string s, string t) {
         int m = s.size();
