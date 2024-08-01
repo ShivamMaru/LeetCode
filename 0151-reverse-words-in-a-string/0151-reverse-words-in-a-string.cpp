@@ -3,7 +3,7 @@ public:
     string reverseWords(string s) {
         
         stringstream ss(s);
-    string tmp, ans;
+        string tmp, ans;
     
     while (ss >> tmp) {
         if (!ans.empty()) ans = " " + ans; // Add space before appending the word
